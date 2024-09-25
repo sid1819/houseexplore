@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+{% block css %}
+.whole_content{
+    margin: 30px;
+}
+.top{
+    justify-content: space-evenly;
+    display: flex;
+    flex-wrap: wrap;
+    
+    align-items: center;
+    overflow: hidden;
+}
+
+.houseHead,.description{
+    padding: 20px;
+    margin: 0px;
+}
+.description{
+    font-size: 110%;
+}
+.sideCard{
+    border-radius: 6px;
+    width: 335px;
+    /* padding: 20px; */
+    height: 600px;
+    /* height: 700px; */
+    /* border: 2px solid black; */
+    /* box-shadow: 4px 3px #888888; */
+    box-shadow: 1px 1px 20px 5px #d6d4d4;
+    margin: 30px;
+    overflow: auto;
+    
+}
+
+.viewMore{
+    position: relative;
+    font-family: "Mukta";
+    border: 3px solid grey;
+    left: 18%;
+    background-color: grey;
+    padding: 5px;
+    font-size: 150%;
+    color: white;
+    width: 200px;
+    border-radius: 4px;
+}
+.viewMore:hover{
+    background-color: white;
+    color: grey;
+    border: 3px solid grey;
+    cursor: pointer;
+    transition: 0ms;
+}
+.middleCard{
+    /* align-self: stretch; */
+    height: 650px;
+}
+.popover{
+    position:fixed;
+    left: 150px;
+    top: 100px;
+    width: 500px;
+    box-shadow: 1px 1px 8px 5px #d6d4d4;
+}
+{% endblock css %}
+{% block body %}
+<body>
+
+    {% if locshow %}
+    <div class="container col-6 mt-3">
+        <form action="search2" method="get">
+            <div class="input-group mb-3">
+                <select class="form-select" id="inputGroupSelect02" name="locSearch">
+                  <option selected>Select the location</option>
+                  {% for loc in locs %}
+                    <option value="{{loc.loc_name}}">{{loc.loc_name}}</option>
+                  {% endfor %}
+                </select>
+                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+            </div>
+        </form>
+    </div>
+    {% endif %}
+    <div class="whole_content">
+        <div class="top">
+            {%for card in cards%}
+            {%if card.sold is False%}
+            <div class="sideCard">
+                <img src="/media/{{card.img1}}" alt="" width="335">
+                <h3 class="houseHead">{{card.name}}</h3>
+                <div class="container col-10">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item description py-2"><img src="../static/images/location.png" alt="" width="30" style="display:block; float: left;">{{card.location.loc_name}} , {{card.city.city_name}}</li>
+                        <li class="list-group-item description py-2">&#8377; {{card.price}}L</li>
+                        <li class="list-group-item description py-2">{{card.area}} sq-ft</li>
+                        <li class="list-group-item description py-2">{{card.bhk}} BHK</li>
+                    </ul>
+                </div>
+                <button class="viewMore my-3" id="viewBtn{{card.house_id}}">View more</button>
+            </div>
+            <div class="container popover" style="display: none;"  id="popover{{card.house_id}}">
+                <div class="row flex-lg-row-reverse align-items-center g-5 py-5 bg-light" style="width: 1000px;box-shadow: 1px 1px 8px 5px #d6d4d4;">
+                  <div class="col-10 col-sm-8 col-lg-6">
+                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                          <div class="carousel-item active">
+                            <img src="/media/{{card.img1}}" class="d-block w-100" style="height: 301px;" alt="...">
+                          </div>
+                          <div class="carousel-item">
+                            <img src="/media/{{card.img2}}" class="d-block w-100" alt="...">
+                          </div>
+                          <div class="carousel-item">
+                            <img src="/media/{{card.img3}}" class="d-block w-100" alt="...">
+                          </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
+                      </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <h2 class="display-5 fw-bold lh-1 mb-3">{{card.name}}</h2>
+                    <p class="lead">{{card.description}}</p>
+                    <div class="container d-flex my-3" style="flex-direction: row;">
+                        {% if card.cctv %}
+                            <div class="item me-3">
+                                <img src="../static/images/cctv.png" alt="" width="33">
+                            </div>
+                        {% endif %}
+                        {% if card.children_play_area %}
+                            <div class="item me-3">
+                                <img src="../static/images/children area.png" alt="" width="33">
+                            </div>
+                        {% endif %}
+                        {% if card.landscape %}
+                            <div class="item me-3">
+                                <img src="../static/images/garden.png" alt="" width="33">
+                            </div>
+                        {% endif %}
+                        {% if card.garage %}
+                            <div class="item me-3">
+                                <img src="../static/images/garage.png" alt="" width="33">
+                            </div>
+                        {% endif %}
+                        {% if card.power_backup %}
+                            <div class="item me-3">
+                                <img src="../static/images/power.png" alt="" width="33">
+                            </div>
+                        {% endif %}
+                        {% if card.lifts %}
+                            <div class="item me-3">
+                                <img src="../static/images/lift.png" alt="" width="33">
+                            </div>
+                        {% endif %}
+                        {% if card.cycling_jogging %}
+                            <div class="item me-3">
+                                <img src="../static/images/cycling.png" alt="" width="33">
+                            </div>
+                        {% endif %}
+                        {% if card.fire_fighting %}
+                            <div class="item me-3">
+                                <img src="../static/images/fire.png" alt="" width="33">
+                            </div>
+                        {% endif %}
+                        {% if card.temple %}
+                            <div class="item me-3">
+                                <img src="../static/images/temple.png" alt="" width="33">
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                        {% if user.is_authenticated %}
+                        <form action="{% url 'chat' card.seller.id %}" method="get">
+                            <input type="text" name="houseid" id="houseid" value="{{card.house_id}}" style="display: none;">
+                            <button type="submit" class="btn btn-outline-secondary btn-lg px-4">Contact Dealer</button>
+                        </form>
+                        {% else %}
+                        <a href="/login">
+                            <button type="submit" class="btn btn-outline-secondary btn-lg px-4">Contact Dealer</button>
+                        </a>
+                        {% endif %}
+                        
+                        <button type="button" class="btn btn-secondary btn-lg px-4 me-md-2" id="closeBtn{{card.house_id}}">Close</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            {%endif%}
+            {%endfor%}
+        </div>
+    </div>
+    
+
+    
+      <script>
+        {%for card in cards %}
+        btn{{card.house_id}} = document.getElementById("viewBtn{{card.house_id}}")
+        console.log("viewBtn{{card.house_id}}")
+        btn{{card.house_id}}.addEventListener('click', popUP{{card.house_id}})
+        function popUP{{card.house_id}}(event){
+            console.log(popUP{{card.house_id}})
+            document.getElementById("popover{{card.house_id}}").style.display = "block"
+        }
+        
+        btn2{{card.house_id}} = document.getElementById("closeBtn{{card.house_id}}")
+        btn2{{card.house_id}}.addEventListener('click', hideUp{{card.house_id}})
+        function hideUp{{card.house_id}}(event){
+            document.getElementById("popover{{card.house_id}}").style.display = "none"
+        }
+        {%endfor%}
+      </script>
+</body>
+{% endblock body %}

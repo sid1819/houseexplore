@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block css %}
+.container{
+    border-radius: 6px;
+    box-shadow: 1px 1px 20px 5px #d6d4d4;
+}
+{% endblock css %}
+{% block body %}
+<div class="container my-5 p-4 col-8 bg-light">
+    <form action="contactus" method="post">
+        {% csrf_token %}
+        <div class="input-group">
+            <span class="input-group-text">First and last name</span>
+            <input type="text" aria-label="First name" name="fname" class="form-control">
+            <input type="text" aria-label="Last name" name="lname" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" name="phome">Phone Number</label>
+            <input type="text" class="form-control" aria-describedby="emailHelp" name="phone">
+            
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
+          
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Enter message here</label>
+            <textarea name="message" id="exampleInputEmail1" class="form-control" cols="30" rows="10"></textarea>
+        </div>
+        
+        {% for message in messages %}
+            <div class="errorMessage m-3">
+            <p class="text-center m-0 font">{{message}}</p>
+            </div>
+        {% endfor %}
+        <!-- <div class="g-recaptcha" data-sitekey="6LdXU-YiAAAAAF0UIk6m94DwJ8g2xeYftr9dkWyf"></div> -->
+        <button type="submit" class="btn btn-primary">Contact Us</button>
+      </form>
+</div>
+{% endblock body %}

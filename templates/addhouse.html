@@ -1,0 +1,131 @@
+{% extends 'base.html'%}
+{% block body %}
+    
+<div class="container my-5 p-4 col-12 bg-light">
+    <form class="row g-3" action="addhouse" method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        <div class="col-12">
+            <label for="inputAddress" class="form-label">Address</label>
+            <input type="text" class="form-control" name="inputAddress" id="inputAddress" placeholder="1234 Main St">
+        </div>
+        <div class="col-md-3">
+            <label for="inputCity" class="form-label">City</label>
+            <input type="text" name="inputCity" class="form-control" id="inputCity">
+        </div>
+        <div class="col-md-2">
+            <label for="inputZip" class="form-label">Zip</label>
+            <input type="text" class="form-control" id="inputZip">
+        </div>
+        <div class="col-md-3">
+            <label for="inputLocation" class="form-label">Location</label>
+            <input type="text" class="form-control" name="inputLocation" id="inputLocation">
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="houseName" class="form-label" name="houseName">House Name</label>
+            <input type="text" class="form-control" aria-describedby="emailHelp" name="houseName">
+        </div>
+        <div class="col-md-2">
+            <label for="inputBedrooms" class="form-label">Number of Bedrooms</label>
+            <input type="text" class="form-control" name="inputBedrooms" id="inputBedrooms">
+        </div>
+        <div class="col-md-2">
+            <label for="inputPrice" class="form-label">Price</label>
+            <input type="text" name="inputPrice" class="form-control" id="inputPrice">
+        </div>
+        <div class="col-md-3">
+            <label for="inputArea" class="form-label">Area</label>
+            <input type="text" class="form-control" name="inputArea" id="inputArea">
+        </div>
+        <div class="form-check col-md-2">
+            <input class="form-check-input" name="cctv" type="checkbox" value="1" id="cctv">
+            <label class="form-check-label" for="cctv">
+                CCTV
+            </label>
+        </div>
+        <div class="form-check col-md-2">
+            <input class="form-check-input" name="children_play_area" type="checkbox" value="1" id="children_play_area">
+            <label class="form-check-label" for="children_play_area">
+                Children Play Area
+            </label>
+        </div>
+        <div class="form-check col-md-2">
+            <input class="form-check-input" name="landscape" type="checkbox" value="1" id="landscape">
+            <label class="form-check-label" for="landscape">
+                Landscape
+            </label>
+        </div>
+        <div class="form-check col-md-2">
+            <input class="form-check-input" name="garage" type="checkbox" value="1" id="garage">
+            <label class="form-check-label" for="garage">
+                Garage
+            </label>
+        </div>
+        <div class="form-check col-md-2">
+            <input class="form-check-input" name="power_backup" type="checkbox" value="1" id="power_backup">
+            <label class="form-check-label" for="power_backup">
+                Power Backup
+            </label>
+        </div>
+        <div class="form-check col-md-2">
+            <input class="form-check-input" name="lifts" type="checkbox" value="1" id="lifts">
+            <label class="form-check-label" for="lifts">
+                Lifts
+            </label>
+        </div>
+        <div class="form-check col-md-2">
+            <input class="form-check-input" name="cycling_jogging" type="checkbox" value="1" id="cycling_jogging">
+            <label class="form-check-label" for="cycling_jogging">
+                Cycling Jogging Area
+            </label>
+        </div>
+        <div class="form-check col-md-2">
+            <input class="form-check-input" name="fire_fighting" type="checkbox" value="1" id="fire_fighting">
+            <label class="form-check-label" for="fire_fighting">
+                Fire Extinguisher
+            </label>
+        </div>
+        <div class="form-check col-md-2">
+            <input class="form-check-input" name="temple" type="checkbox" value="1" id="temple">
+            <label class="form-check-label" for="temple">
+                Temple
+            </label>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">House Description</label>
+            <textarea class="form-control"  name="description" id="description" rows="3"></textarea>
+        </div>
+        <div class="input-group mb-3 col-md-3">
+            <label class="input-group-text" for="inputGroupFile01">First Image</label>
+            <input type="file" class="form-control" name="inputGroupFile01" id="inputGroupFile01">
+        </div>
+        <div class="input-group mb-3 col-md-3">
+            <label class="input-group-text" for="inputGroupFile02">Second Image</label>
+            <input type="file" class="form-control" name="inputGroupFile02" id="inputGroupFile02">
+        </div>
+        <div class="input-group mb-3 col-md-3">
+            <label class="input-group-text" for="inputGroupFile03">Third Image</label>
+            <input type="file" class="form-control" name="inputGroupFile03" id="inputGroupFile03">
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+            <label class="form-check-label" for="exampleCheck1">I agree terms and conditions</label>
+        </div>
+        {% for message in messages %}
+        <div class="errorMessage m-3">
+            <p class="text-center m-0 font">{{message}}</p>
+        </div>
+        {% endfor %}
+        <!-- <div class="g-recaptcha" data-sitekey="6LdXU-YiAAAAAF0UIk6m94DwJ8g2xeYftr9dkWyf"></div> -->
+        <button type="submit" class="btn btn-secondary col-md-3">Add House</button>
+    </form>
+</div>
+<!-- Include jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Include Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"
+></script>
+{% endblock body%}

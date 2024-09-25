@@ -1,0 +1,85 @@
+{% extends 'base.html'%}
+{% block css %}
+    .card {
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Add shadow effect */
+        opacity: 0.9; /* Adjust card opacity */
+        transition: opacity 0.3s ease-in-out;
+    }
+    .card:hover {
+        opacity: 1; /* Increase opacity on hover */
+    }
+    .sold-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 5px 10px;
+        background-color: red;
+        color: white;
+        font-weight: bold;
+        border-radius: 4px;
+        z-index: 1;
+    }
+{% endblock css %}
+{% block body %}
+<div class="container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <h1 class="text-center mt-5 mb-4">My Houses</h1>
+    <div class="row">
+        {% for house in houses %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ house.img1.url }}" class="card-img-top" alt="House Image">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ house.name }}</h5>
+                        <p class="card-text">Price: ${{ house.price }}</p>
+                        <p class="card-text">City: {{ house.city.city_name }}</p>
+                        <p class="card-text">Location: {{ house.location.loc_name }}</p>
+                        <p class="card-text">Area: {{ house.area }} sq. ft.</p>
+                        <p class="card-text">BHK: {{ house.bhk }}</p>
+                        <p class="card-text">{{ house.description }}</p>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmRemoveModal{{ house.house_id }}">
+                            Remove
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal for Confirmation -->
+            <div class="modal fade" id="confirmRemoveModal{{ house.house_id }}" tabindex="-1" role="dialog" aria-labelledby="confirmRemoveModalLabel{{ house.house_id }}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmRemoveModalLabel{{ house.house_id }}">Confirm Removal</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to remove this house?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <a href="{% url 'remove_house' house.house_id %}" class="btn btn-danger">Yes, Remove</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% if not houses %}
+        <div class="alert alert-info" role="alert">
+            No houses added by you yet.
+        </div>
+    {% endif %}
+</div>
+<!-- Include jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Include Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock body%}
